@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebJS-102</title>
+    <title>WebJS-103</title>
     <style>
         /* Style for the code box */
         #code-container {
@@ -45,7 +45,7 @@
         <button onclick="runCode()">Run</button>
         <div id="output"></div>
     </div>
-    <p>evaluateCode Function: This function is introduced to safely evaluate the user-inputted code within a restricted environment (sandbox). The Math object and random function are aliased and passed into this sandboxed environment. The new Function constructor is used to create a function with the provided code, enabling access to Math and random within that scope.
+    <p>evaluateCode Function: This function is introduced to safely evaluate the user-inputted code within a restricted environment. The Math object and random function are aliased and passed into this sandboxed environment. The new Function constructor is used to create a function with the provided code, enabling access to Math and random within that scope.
 Usage of Math and random: Inside the evaluateCode function, Math refers to the built-in JavaScript Math object, allowing mathematical operations like Math.sqrt(x), Math.sin(x), etc. The random function is a wrapper around Math.random() for generating random numbers between 0 (inclusive) and 1 (exclusive).
 Now, when a user writes code in the textarea and clicks "Run", the provided code is executed securely within the defined context, providing access to mathematical and random functionality similar to Python's math and random modules. Always use caution with eval and ensure that this functionality is used only in trusted environments.</p>
     <script>
@@ -62,14 +62,11 @@ Now, when a user writes code in the textarea and clicks "Run", the provided code
 
         // Function to evaluate the code with math and random functionality
         function evaluateCode(code) {
-            // Create aliases for Math and random functions
+            // Execute the code safely
             const Math = window.Math;
             const random = () => Math.random();
-
-            // Execute the code safely in a sandbox
-            const sandbox = {};
-            const context = new Function('Math', 'random', 'with(sandbox) { return eval(code); }');
-            return context(Math, random);
+            
+            return eval(code); // Execute code with access to Math and random
         }
 
         // Function to display output in the output area
