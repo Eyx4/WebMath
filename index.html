@@ -3,63 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebMath</title>
+    <title>Code Box</title>
+    <style>
+        /* Style for the code box */
+        #code-container {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for code input area */
+        #code-input {
+            flex: 1;
+            min-height: 150px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            border: none;
+            resize: vertical;
+            padding: 5px;
+            outline: none;
+        }
+
+        /* Style for output area */
+        #output {
+            border-top: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f8f8f8;
+            overflow-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
+    <div id="code-container">
+        <textarea id="code-input" placeholder="Write your code here..."></textarea>
+        <button onclick="runCode()">Run</button>
+        <div id="output"></div>
+    </div>
+
     <script>
-        // Define custom language features
-        const customLanguage = {
-            random: (min, max) => {
-                return Math.random() * (max - min) + min;
-            },
-            math: {
-                pi: Math.PI,
-                e: Math.E,
-                gr: (1 + Math.sqrt(5)) / 2, // Golden ratio
-                sqrt: Math.sqrt,
-                atan: Math.atan,
-                sin: Math.sin,
-                cos: Math.cos
-            },
-            salem: () => {
-                console.log("Code executed without errors.");
-            }
-        };
-
-        // Function to parse and execute custom language commands
-        function executeCommand(command) {
-            const tokens = command.trim().split(/\s+/);
-            const keyword = tokens[0];
-
-            if (keyword === 'import') {
-                const libName = tokens[1];
-                if (libName === 'random') {
-                    customLanguage.random = customLanguage.random;
-                } else if (libName === 'math') {
-                    Object.assign(customLanguage, customLanguage.math);
-                } else if (libName === 'salem') {
-                    customLanguage.salem = customLanguage.salem;
-                }
-            } else if (keyword === 'var') {
-                // Variable declaration
-                const varName = tokens[1];
-                const expression = tokens.slice(3).join(' '); // Assume expression starts from index 3
-                const value = eval(expression);
-                customLanguage[varName] = value;
-            } else if (keyword === 'print') {
-                // Print statement
-                const value = eval(tokens.slice(1).join(' '));
-                console.log(value);
+        // Function to execute code and display output
+        function runCode() {
+            const code = document.getElementById('code-input').value;
+            try {
+                // Use eval to execute the code (Note: Use eval cautiously and avoid for untrusted inputs)
+                const result = eval(code);
+                displayOutput(result);
+            } catch (error) {
+                displayOutput(`Error: ${error.message}`);
             }
         }
 
-        // Example usage
-        executeCommand("import random");
-        executeCommand("import math");
-        executeCommand("import salem");
-
-        executeCommand("var r = customLanguage.random(2, 3)");
-        executeCommand("print(r)");
+        // Function to display output in the output area
+        function displayOutput(output) {
+            const outputDiv = document.getElementById('output');
+            outputDiv.textContent = output;
+        }
     </script>
 </body>
 </html>
