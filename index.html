@@ -45,7 +45,9 @@
         <button onclick="runCode()">Run</button>
         <div id="output"></div>
     </div>
-
+    <p>evaluateCode Function: This function is introduced to safely evaluate the user-inputted code within a restricted environment (sandbox). The Math object and random function are aliased and passed into this sandboxed environment. The new Function constructor is used to create a function with the provided code, enabling access to Math and random within that scope.
+Usage of Math and random: Inside the evaluateCode function, Math refers to the built-in JavaScript Math object, allowing mathematical operations like Math.sqrt(x), Math.sin(x), etc. The random function is a wrapper around Math.random() for generating random numbers between 0 (inclusive) and 1 (exclusive).
+Now, when a user writes code in the textarea and clicks "Run", the provided code is executed securely within the defined context, providing access to mathematical and random functionality similar to Python's math and random modules. Always use caution with eval and ensure that this functionality is used only in trusted environments.</p>
     <script>
         // Function to execute code and display output
         function runCode() {
