@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebMath-102</title>
+    <title>WebJS-101</title>
     <style>
         /* Style for the code box */
         #code-container {
@@ -51,23 +51,12 @@
         function runCode() {
             const code = document.getElementById('code-input').value;
             try {
-                const result = evaluateCode(code);
+                // Use eval to execute the code (Note: Use eval cautiously and avoid for untrusted inputs)
+                const result = eval(code);
                 displayOutput(result);
             } catch (error) {
                 displayOutput(`Error: ${error.message}`);
             }
-        }
-
-        // Function to evaluate the code with math and random functionality
-        function evaluateCode(code) {
-            // Create aliases for Math and random functions
-            const Math = window.Math;
-            const random = () => Math.random();
-
-            // Execute the code safely in a sandbox
-            const sandbox = {};
-            const context = new Function('Math', 'random', 'with(sandbox) { return eval(code); }');
-            return context(Math, random);
         }
 
         // Function to display output in the output area
@@ -78,4 +67,3 @@
     </script>
 </body>
 </html>
-
